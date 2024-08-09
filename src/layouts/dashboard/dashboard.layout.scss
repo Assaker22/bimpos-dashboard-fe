@@ -7,4 +7,10 @@ main {
   min-height: calc(100vh - 114px);
 
   background-color: #fafafa;
+
+  &.mobile {
+    width: calc(100vw - 84px);
+    margin-left: 44px;
+    padding: 20px 20px;
+  }
 }

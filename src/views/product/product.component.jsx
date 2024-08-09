@@ -14,6 +14,7 @@ import {
   ReplaceIcon,
   SettingsIcon,
 } from "lucide-react";
+import useWindowDimensions from "../../hooks/useWindowDimensions.hook.jsx";
 
 export default function Product() {
   const [state, setState] = useState({
@@ -54,6 +55,8 @@ export default function Product() {
     units: ["Post", "Port"],
     concepts: ["All Concepts", "Concept 1", "Concept 2", "Concept 3"],
   });
+
+  const { isMobile } = useWindowDimensions();
 
   const handleChange = (path, type = "input") => {
     return (e) => {
@@ -97,7 +100,7 @@ export default function Product() {
   }, [state]);
 
   return (
-    <div className="product-container">
+    <div className={`product-container ${isMobile ? "mobile" : ""}`}>
       <div className="product-container-column">
         <DropDown
           label="Product Description"
@@ -218,9 +221,10 @@ export default function Product() {
             style={{
               width: "100%",
               display: "flex",
-              flexDirection: "row",
+              flexDirection: isMobile ? "column" : "row",
               justifyContent: "space-between",
               marginBottom: "12px",
+              gap: isMobile ? "8px" : "",
             }}
           >
             <div
@@ -326,12 +330,16 @@ export default function Product() {
         </Panel>
 
         <Panel
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gridTemplateRows: "repeat(2, 100px)",
-            gap: "8px",
-          }}
+          style={
+            isMobile
+              ? { display: "flex", flexDirection: "column" }
+              : {
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3, 1fr)",
+                  gridTemplateRows: "repeat(2, 100px)",
+                  gap: "8px",
+                }
+          }
         >
           <Panel
             variant="dark button"
@@ -368,7 +376,7 @@ export default function Product() {
               justifySelf: "stretch",
               justifyContent: "center",
               textAlign: "center",
-              fontSize: "2rem",
+              fontSize: "1.2rem",
             }}
           >
             Checking Burger CMA
@@ -460,7 +468,6 @@ export default function Product() {
               flexDirection: "column",
               alignItems: "start",
               padding: "16px",
-
               gap: "24px",
             }}
           >
@@ -471,13 +478,14 @@ export default function Product() {
                 flexDirection: "column",
                 alignItems: "start",
                 flexWrap: "wrap",
-                height: "121px",
+                height: isMobile ? "" : "121px",
                 gap: "8px",
               }}
             >
               <Input
                 variant="small"
                 label="Last Order On"
+                style={isMobile ? { width: "100%" } : {}}
                 value={state.productCost.lastOrderOn}
                 onChange={handleChange("productCost.lastOrderOn")}
               />
@@ -485,30 +493,40 @@ export default function Product() {
                 variant="small"
                 label="Last Order QTY"
                 type="number"
+                style={isMobile ? { width: "100%" } : {}}
                 value={state.productCost.lastOrderQty}
                 onChange={handleChange("productCost.lastOrderQty", "number")}
               />
               <Input
                 variant="small"
                 label="From Supplier"
+                style={isMobile ? { width: "100%" } : {}}
                 value={state.productCost.fromSupplier}
                 onChange={handleChange("productCost.fromSupplier")}
               />
               <Input
                 variant="small"
                 label="AVG Cost"
+                style={isMobile ? { width: "100%" } : {}}
                 value={state.productCost.avgCost}
                 onChange={handleChange("productCost.avgCost")}
               />
               <Input
                 variant="small"
                 label="Last Cost"
+                style={isMobile ? { width: "100%" } : {}}
                 value={state.productCost.lastCost}
                 onChange={handleChange("productCost.lastCost")}
               />
             </div>
 
-            <Button style={{ width: "calc(50% - 8px)" }}>EDIT COST</Button>
+            <Button
+              style={{
+                width: isMobile ? "100%" : "calc(50% - 8px)",
+              }}
+            >
+              EDIT COST
+            </Button>
             <span style={{ color: "var(--accent-color)" }}>
               All Costs are TAX Excluded | All Costs are in LBP
             </span>
@@ -516,41 +534,65 @@ export default function Product() {
         </Label>
 
         <div
-          style={{ display: "flex", flexDirection: "row", gap: "8px", flex: 1 }}
+          style={{
+            display: "flex",
+            flexDirection: isMobile ? "column" : "row",
+            gap: "8px",
+            flex: 1,
+          }}
         >
-          <Panel
-            variant="accent icon button"
-            icon={<Layers2Icon />}
-            style={{ flex: 1, fontSize: "1.5rem" }}
-          >
-            DUPLICATE
-          </Panel>
-          <Panel
-            variant="accent icon button"
-            icon={<ReplaceIcon />}
-            style={{ flex: 1, fontSize: "1.5rem" }}
-          >
-            REPLACE
-          </Panel>
-          <Panel
-            variant="dark icon button"
-            icon={<SettingsIcon />}
-            style={{ flex: 1, zIndex: 1, fontSize: "1.5rem" }}
-          >
-            EDIT
-          </Panel>
-          <Panel
-            variant="icon button"
-            icon={<CircleCheckIcon />}
+          <div
             style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: "8px",
               flex: 1,
-              marginLeft: "-1rem",
-              paddingRight: "1rem",
-              fontSize: "1.5rem",
             }}
           >
-            NEW
-          </Panel>
+            <Panel
+              variant="accent icon button"
+              icon={<Layers2Icon />}
+              style={{ flex: 1, fontSize: "1rem" }}
+            >
+              DUPLICATE
+            </Panel>
+            <Panel
+              variant="accent icon button"
+              icon={<ReplaceIcon />}
+              style={{ flex: 1, fontSize: "1rem" }}
+            >
+              REPLACE
+            </Panel>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: "8px",
+              flex: 1,
+            }}
+          >
+            <Panel
+              variant="dark icon button"
+              icon={<SettingsIcon />}
+              style={{ flex: 1, zIndex: 1, fontSize: "1rem" }}
+            >
+              EDIT
+            </Panel>
+            <Panel
+              variant="icon button"
+              icon={<CircleCheckIcon />}
+              style={{
+                flex: 1,
+                marginLeft: "-1rem",
+                paddingRight: "1rem",
+                fontSize: "1rem",
+              }}
+            >
+              NEW
+            </Panel>
+          </div>
         </div>
       </div>
     </div>

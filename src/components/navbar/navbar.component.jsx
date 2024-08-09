@@ -1,19 +1,61 @@
 import "./navbar.component.scss";
 
+import { Panel } from "primereact/panel";
 import Divider from "../divider/divider.component";
 import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  ChevronRightIcon,
   EarthIcon,
   SearchIcon,
   SquareArrowOutUpRightIcon,
 } from "lucide-react";
 import Button from "../button/button.component";
+import { useClickOutside } from "primereact/hooks";
+import useWindowDimensions from "../../hooks/useWindowDimensions.hook";
+import { useEffect, useRef, useState } from "react";
 
 export default function Navbar() {
+  const { isMobile } = useWindowDimensions();
+  const [navbar, setNavbar] = useState({ collapsed: true });
+
+  const containerRef = useRef();
+
+  useEffect(() => {
+    if (!isMobile) {
+      setNavbar({ collapsed: false });
+    } else {
+      setNavbar({ collapsed: true });
+    }
+  }, [isMobile]);
+
+  useClickOutside(containerRef, () => {
+    if (isMobile) {
+      setNavbar({ collapsed: true });
+    }
+  });
+
   return (
-    <div className="navbar-container">
+    <div
+      ref={containerRef}
+      className={`navbar-container ${navbar.collapsed ? "collapsed" : ""}`}
+      onClick={() => {
+        setNavbar({ collapsed: false });
+      }}
+    >
+      {navbar.collapsed && (
+        <Button
+          className="navbar-collapse-button"
+          variant="icon"
+          onClick={() => {
+            setNavbar({ collapsed: false });
+          }}
+        >
+          <ChevronRightIcon />
+        </Button>
+      )}
+
       <h1>
         <img
           className="logo"
