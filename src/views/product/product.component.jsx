@@ -59,8 +59,6 @@ export default function Product() {
     return (e) => {
       const fields = path.split(".");
 
-      console.log("EVENT: ", e);
-
       setState((curr) => {
         let newValue = { ...curr };
         let parentNode = newValue;
@@ -87,8 +85,6 @@ export default function Product() {
             parentNode = parentNode[field];
           }
         });
-
-        console.log("NEW VALUE: ", newValue);
 
         return newValue;
       });
