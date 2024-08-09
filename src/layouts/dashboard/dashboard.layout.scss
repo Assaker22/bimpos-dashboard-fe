@@ -9,8 +9,9 @@ main {
   background-color: #fafafa;
 
   &.mobile {
-    width: calc(100vw - 84px);
-    margin-left: 44px;
+    width: calc(100vw - 40px);
+    margin: 0;
     padding: 20px 20px;
+    margin-top: 74px;
   }
 }

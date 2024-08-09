@@ -15,39 +15,44 @@ import {
   SettingsIcon,
 } from "lucide-react";
 import useWindowDimensions from "../../hooks/useWindowDimensions.hook.jsx";
+import useCrud from "../../hooks/useCrud.jsx";
 
 export default function Product() {
-  const [state, setState] = useState({
-    description: "Chicken Burger CMA",
-    reportCategory: "Burgers",
-    productType: "Food",
-    sellingPrice: 0,
-    manualPrice: false,
-    concept: "All Concepts",
-    defaultUnit: "Post",
-    recipeUsageUnit: "Port",
-    conversionDefRecipe: 5,
-    settings: [
-      { id: 1, description: "Sales Taxes", value: "VAT" },
-      { id: 2, description: "Purchasing Taxes", value: "VAT" },
-      { id: 3, description: "Question Group", value: "NONE" },
-      { id: 4, description: "Print Channels", value: "NONE" },
-      { id: 5, description: "Stock Polling", value: "STOCK POLLING" },
-      { id: 6, description: "Course Type", value: "NONE" },
-    ],
-    barcodes: [
-      { id: 1, description: "29823219843514651" },
-      { id: 2, description: "29823219843514651" },
-    ],
+  const { handleChange, state } = useCrud({
+    initialState: {
+      description: "Chicken Burger CMA",
+      reportCategory: "Burgers",
+      productType: "Food",
+      sellingPrice: 0,
+      manualPrice: false,
+      concept: "All Concepts",
+      defaultUnit: "Post",
+      recipeUsageUnit: "Port",
+      conversionDefRecipe: 5,
+      settings: [
+        { id: 1, description: "Sales Taxes", value: "VAT" },
+        { id: 2, description: "Purchasing Taxes", value: "VAT" },
+        { id: 3, description: "Question Group", value: "NONE" },
+        { id: 4, description: "Print Channels", value: "NONE" },
+        { id: 5, description: "Stock Polling", value: "STOCK POLLING" },
+        { id: 6, description: "Course Type", value: "NONE" },
+      ],
+      barcodes: [
+        { id: 1, description: "29823219843514651" },
+        { id: 2, description: "29823219843514651" },
+      ],
 
-    productCost: {
-      lastOrderOn: "Never",
-      lastOrderQty: 0,
-      fromSupplier: "Aramex",
-      avgCost: "Never",
-      lastCost: 0,
+      productCost: {
+        lastOrderOn: "Never",
+        lastOrderQty: 0,
+        fromSupplier: "Aramex",
+        avgCost: "Never",
+        lastCost: 0,
+      },
     },
+    endpoint: "products",
   });
+
   const [options, setOptions] = useState({
     description: ["Beef Burger CMA", "Chicken Burger CMA", "Fish Burger CMA"],
     reportCategories: ["Burgers", "Pizza", "Sandwiches", "Salads"],
@@ -57,42 +62,6 @@ export default function Product() {
   });
 
   const { isMobile } = useWindowDimensions();
-
-  const handleChange = (path, type = "input") => {
-    return (e) => {
-      const fields = path.split(".");
-
-      setState((curr) => {
-        let newValue = { ...curr };
-        let parentNode = newValue;
-
-        fields.forEach((field, index) => {
-          if (!isNaN(field)) {
-            field = parseInt(field, 10);
-          }
-
-          if (index === fields.length - 1) {
-            if (type === "input") {
-              parentNode[field] = e.value;
-            } else if (type === "number") {
-              parentNode[field] = e.target.value;
-            }
-          } else {
-            if (typeof parentNode[field] === "object") {
-              parentNode[field] = Array.isArray(parentNode[field])
-                ? [...parentNode[field]]
-                : { ...parentNode[field] };
-            } else {
-              parentNode[field] = isNaN(fields[index + 1]) ? {} : [];
-            }
-            parentNode = parentNode[field];
-          }
-        });
-
-        return newValue;
-      });
-    };
-  };
 
   useEffect(() => {
     console.log("STATE: ", state);

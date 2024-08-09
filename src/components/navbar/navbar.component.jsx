@@ -8,6 +8,7 @@ import {
   ChevronRight,
   ChevronRightIcon,
   EarthIcon,
+  MenuIcon,
   SearchIcon,
   SquareArrowOutUpRightIcon,
 } from "lucide-react";
@@ -37,104 +38,125 @@ export default function Navbar() {
   });
 
   return (
-    <div
-      ref={containerRef}
-      className={`navbar-container ${navbar.collapsed ? "collapsed" : ""}`}
-      onClick={() => {
-        setNavbar({ collapsed: false });
-      }}
-    >
-      {navbar.collapsed && (
-        <Button
-          className="navbar-collapse-button"
-          variant="icon"
-          onClick={() => {
-            setNavbar({ collapsed: false });
-          }}
-        >
-          <ChevronRightIcon />
-        </Button>
+    <>
+      {isMobile && (
+        <div className="top-navbar">
+          <Button
+            onClick={() => {
+              setNavbar({ collapsed: false });
+            }}
+            icon
+            style={{ aspectRatio: 1, height: "40px" }}
+          >
+            <MenuIcon color="var(--text-color)" />
+          </Button>
+          <img
+            className="logo"
+            alt="bimpos logo"
+            src="images/BIM-POS-logo-black.jpg"
+          />
+        </div>
       )}
 
-      <h1>
-        <img
-          className="logo"
-          alt="bimpos logo"
-          src="images/BIM-POS-logo-black.jpg"
-        />
-        <span className="title">THE DASHBOARD</span>
-      </h1>
+      <div
+        ref={containerRef}
+        className={`navbar-container ${navbar.collapsed ? "collapsed" : ""}`}
+        onClick={() => {
+          setNavbar({ collapsed: false });
+        }}
+      >
+        {navbar.collapsed && (
+          <Button
+            className="navbar-collapse-button"
+            variant="icon"
+            onClick={() => {
+              setNavbar({ collapsed: false });
+            }}
+          >
+            <ChevronRightIcon />
+          </Button>
+        )}
 
-      <Divider horizontal />
+        <h1>
+          <img
+            className="logo"
+            alt="bimpos logo"
+            src="images/BIM-POS-logo-black.jpg"
+          />
+          <span className="title">THE DASHBOARD</span>
+        </h1>
 
-      <h2>
-        <Button icon>
-          <ChevronLeft color={"var(--text-color)"} />
-        </Button>
+        <Divider horizontal />
 
-        <Divider vertical dark />
-        <span>PRODUCT SETUP</span>
-      </h2>
+        <h2>
+          <Button icon>
+            <ChevronLeft color={"var(--text-color)"} />
+          </Button>
 
-      <Divider horizontal />
+          <Divider vertical dark />
+          <span>PRODUCT SETUP</span>
+        </h2>
 
-      <div className="usd-products">
-        <div className="labels-container">
-          <span className="label1">USD PRODUCTS</span>
-          <span className="label2">FUSD AT</span>
-        </div>
-        <div className="value-container">
-          <span className="value">91,000</span>
-          <div className="value-icon">
-            <ChevronDown color="white" size={18} />
+        <Divider horizontal />
+
+        <div className="usd-products">
+          <div className="labels-container">
+            <span className="label1">USD PRODUCTS</span>
+            <span className="label2">FUSD AT</span>
+          </div>
+          <div className="value-container">
+            <span className="value">91,000</span>
+            <div className="value-icon">
+              <ChevronDown color="white" size={18} />
+            </div>
           </div>
         </div>
-      </div>
 
-      <Divider horizontal />
+        <Divider horizontal />
 
-      <div className="search-container">
-        <label>QUICK SEARCH</label>
-        <div className="search-input-container">
-          <div className="input-container">
-            <input placeholder="Product description Ex. Burger" />
-            <SearchIcon color={"var(--accent-color)"} />
+        <div className="search-container">
+          <label>QUICK SEARCH</label>
+          <div className="search-input-container">
+            <div className="input-container">
+              <input placeholder="Product description Ex. Burger" />
+              <SearchIcon color={"var(--accent-color)"} />
+            </div>
+
+            <span className="search-input-hotkey">F3</span>
           </div>
-
-          <span className="search-input-hotkey">F3</span>
         </div>
-      </div>
 
-      <ul className="nav-items">
-        <li className="selected">
-          <a>GENERAL INFORMATION</a>
-          {true && <ChevronRight height={"100%"} />}
-        </li>
-        <li>
-          <a>PRODUCT DETAILS</a>
-        </li>
-        <li>
-          <a>STOCK CENTER</a>
-        </li>
-        <li>
-          <a>OTHER INFORMATION</a>
-        </li>
-      </ul>
-
-      <Divider />
-
-      <div className="support-container">
-        <label>SUPPORT</label>
-
-        <ul>
-          <li>
-            <EarthIcon height={"1rem"} /> Contact us
+        <ul className="nav-items">
+          <li className="selected">
+            <a>GENERAL INFORMATION</a>
+            {true && <ChevronRight height={"100%"} />}
           </li>
           <li>
-            <SquareArrowOutUpRightIcon height={"1rem"} /> FAQ
+            <a>PRODUCT DETAILS</a>
+          </li>
+          <li>
+            <a>STOCK CENTER</a>
+          </li>
+          <li>
+            <a>OTHER INFORMATION</a>
           </li>
         </ul>
+
+        <Divider />
+
+        <div className="support-container">
+          <label>SUPPORT</label>
+
+          <ul>
+            <li>
+              <EarthIcon height={"1rem"} /> Contact us
+            </li>
+            <li>
+              <SquareArrowOutUpRightIcon height={"1rem"} /> FAQ
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
