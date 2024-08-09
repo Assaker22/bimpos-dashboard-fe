@@ -1,0 +1,51 @@
+.p-inputswitch {
+  --button-width: 3rem;
+  --button-height: 1.5rem;
+  --toggle-diameter: 1.1rem;
+  --button-toggle-offset: calc(
+    (var(--button-height) - var(--toggle-diameter)) / 2
+  );
+
+  .p-inputswitch-input {
+    display: none;
+  }
+
+  .p-inputswitch-slider {
+    cursor: pointer;
+    display: inline-block;
+    width: var(--button-width);
+    height: var(--button-height);
+    background-color: var(--background-color);
+    border-radius: calc(var(--button-height) / 2);
+    position: relative;
+    transition: 0.2s all ease-in-out;
+
+    &::after {
+      content: "";
+      display: inline-block;
+      width: var(--toggle-diameter);
+      height: var(--toggle-diameter);
+      background-color: var(--text-color);
+      border-radius: calc(var(--toggle-diameter) / 2);
+      position: absolute;
+      top: var(--button-toggle-offset);
+      transform: translateX(var(--button-toggle-offset));
+      transition: 0.2s all ease-in-out;
+    }
+  }
+
+  &.p-highlight {
+    .p-inputswitch-slider {
+      background-color: var(--background-color);
+      &::after {
+        background-color: var(--accent-color);
+        transform: translateX(
+          calc(
+            var(--button-width) - var(--toggle-diameter) -
+              var(--button-toggle-offset)
+          )
+        );
+      }
+    }
+  }
+}

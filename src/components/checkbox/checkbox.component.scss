@@ -1,0 +1,41 @@
+.checkbox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+
+  label {
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    flex: 1;
+    white-space: nowrap;
+  }
+
+  .p-checkbox {
+    &:hover {
+      cursor: pointer;
+    }
+    input {
+      display: none;
+    }
+
+    .p-checkbox-box {
+      background-color: var(--background-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      border: 2px solid var(--text-color);
+      padding: 4px;
+
+      .p-checkbox-icon {
+        path {
+          fill: var(--accent-color);
+        }
+      }
+    }
+  }
+}
